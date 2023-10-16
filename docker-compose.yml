@@ -11,7 +11,7 @@ services:
       - ./db/sql/data.sql:/docker-entrypoint-initdb.d/data.sql
     environment:
       - POSTGRES_DB=db_travel
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
     ports:
-      - "5432:5432"
+      - "5433:5432"
