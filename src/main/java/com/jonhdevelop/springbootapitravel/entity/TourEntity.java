@@ -20,6 +20,7 @@ public class TourEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_tour")
     private Long id;
 
     @OneToMany(

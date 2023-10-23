@@ -7,8 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
-@RequestMapping(path = "ticket")
+@RequestMapping("/ticket")
 @RequiredArgsConstructor
 public class TicketController {
 
@@ -17,6 +19,11 @@ public class TicketController {
     @PostMapping
     public ResponseEntity<TicketResponse> post(@RequestBody TicketRequest ticketRequest){
         return ResponseEntity.ok(ticketService.create(ticketRequest));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TicketResponse> get(@PathVariable UUID id){
+        return ResponseEntity.ok(ticketService.read(id));
     }
 
 }

@@ -31,8 +31,8 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public TicketResponse create(TicketRequest request) {
-        var fly = flyRepository.findById(request.getIdfly()).orElseThrow(IllegalStateException::new);
-        var customer = customerRepository.findById(request.getIdClient()).orElseThrow(IllegalStateException::new);
+        var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+        var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
         var ticketToPersist = TicketEntity.builder()
                 .id(UUID.randomUUID())
                 .flyEntity(fly)
@@ -49,7 +49,8 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public TicketResponse read(UUID uuid) {
-        return null;
+        TicketEntity ticketEntity = ticketRepository.findById(uuid).orElseThrow();
+        return this.entityToResponse(ticketEntity);
     }
 
     @Override

@@ -19,6 +19,7 @@ import java.util.UUID;
 public class TicketEntity implements Serializable {
 
     @Id
+    @Column(name = "id_ticket")
     private UUID id;
 
     @Column(name = "departure_date")

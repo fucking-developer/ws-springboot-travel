@@ -17,6 +17,7 @@ import java.util.UUID;
 public class ReservacionEntity implements Serializable {
 
     @Id
+    @Column(name = "id_reservation")
     private UUID id;
 
     @Column(name = "date_reservation")

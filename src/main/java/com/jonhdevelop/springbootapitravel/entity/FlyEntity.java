@@ -20,6 +20,7 @@ public class FlyEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_fly")
     private Long id;
 
     @Column(name = "origin_lat")
