@@ -10,5 +10,4 @@ public class SpringbootApiTravelApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootApiTravelApplication.class, args);
 	}
-
 }

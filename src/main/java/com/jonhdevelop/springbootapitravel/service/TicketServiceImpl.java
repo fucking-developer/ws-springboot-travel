@@ -7,6 +7,7 @@ import com.jonhdevelop.springbootapitravel.repository.TicketRepository;
 import com.jonhdevelop.springbootapitravel.request.TicketRequest;
 import com.jonhdevelop.springbootapitravel.response.FlyResponse;
 import com.jonhdevelop.springbootapitravel.response.TicketResponse;
+import com.jonhdevelop.springbootapitravel.util.TravelUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Transactional
@@ -28,6 +28,9 @@ public class TicketServiceImpl implements TicketService{
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
 
+    private static final BigDecimal charger_price_percentaje = BigDecimal.valueOf(0.25);
+
+
 
     @Override
     public TicketResponse create(TicketRequest request) {
@@ -37,10 +40,10 @@ public class TicketServiceImpl implements TicketService{
                 .id(UUID.randomUUID())
                 .flyEntity(fly)
                 .customer(customer)
-                .price(fly.getPrice().multiply(BigDecimal.valueOf(0.25)))
+                .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentaje)))
                 .purchaseDate(LocalDate.now())
-                .arrivalDate(LocalDateTime.now())
-                .departureDate(LocalDateTime.now())
+                .departureDate(TravelUtil.getRandomSoon())
+                .arrivalDate(TravelUtil.getRandomLatter())
                 .build();
         var ticketPersist = ticketRepository.save(ticketToPersist);
         log.info("Ticket saved with id: {}", ticketPersist.getId());
@@ -55,12 +58,21 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public TicketResponse update(TicketRequest request, UUID uuid) {
-        return null;
+        var ticketToUpdate = ticketRepository.findById(uuid).orElseThrow();
+        var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+        ticketToUpdate.setFlyEntity(fly);
+        ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentaje)));
+        ticketToUpdate.setDepartureDate(TravelUtil.getRandomSoon());
+        ticketToUpdate.setArrivalDate(TravelUtil.getRandomLatter());
+        var ticketUpdate = this.ticketRepository.save(ticketToUpdate);
+        log.info("Ticket updated with id {}", ticketUpdate.getId());
+        return this.entityToResponse(ticketUpdate);
     }
 
     @Override
     public void delete(UUID uuid) {
-
+        var ticketToDelete = ticketRepository.findById(uuid).orElseThrow();
+        this.ticketRepository.delete(ticketToDelete);
     }
 
 
@@ -72,4 +84,11 @@ public class TicketServiceImpl implements TicketService{
         response.setFly(flyResponse);
         return response;
     }
+
+    @Override
+    public BigDecimal findPrice(Long idFly) {
+        var fly = this.flyRepository.findById(idFly).orElseThrow();
+        return fly.getPrice().add(fly.getPrice().multiply(charger_price_percentaje));
+    }
+
 }

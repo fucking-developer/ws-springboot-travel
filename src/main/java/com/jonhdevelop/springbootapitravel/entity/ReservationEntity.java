@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -14,26 +16,26 @@ import java.util.UUID;
 @Entity
 @Builder
 @Table(name = "reservation")
-public class ReservacionEntity implements Serializable {
+public class ReservationEntity implements Serializable {
 
     @Id
     @Column(name = "id_reservation")
     private UUID id;
 
     @Column(name = "date_reservation")
-    private Date dateReservation;
+    private LocalDateTime dateReservation;
 
     @Column(name = "date_start")
-    private Date dateStart;
+    private LocalDate dateStart;
 
     @Column(name = "date_end")
-    private Date dateEnd;
+    private LocalDate dateEnd;
 
     @Column(name = "total_days")
-    private Long totalDays;
+    private Integer totalDays;
 
     @Column(name = "price")
-    private Long price;
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")

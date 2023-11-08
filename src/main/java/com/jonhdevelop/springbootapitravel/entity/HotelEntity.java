@@ -37,7 +37,7 @@ public class HotelEntity implements Serializable {
             fetch = FetchType.LAZY,
             orphanRemoval = true
     )
-    private Set<ReservacionEntity> reservations;
+    private Set<ReservationEntity> reservations;
 
 }
 

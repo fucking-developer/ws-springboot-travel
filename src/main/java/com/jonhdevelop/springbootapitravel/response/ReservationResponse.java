@@ -1,6 +1,5 @@
 package com.jonhdevelop.springbootapitravel.response;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,26 +12,27 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class TicketResponse implements Serializable {
-
+public class ReservationResponse implements Serializable {
 
     private UUID id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime departureDate;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime arrivalDate;
+    private LocalDateTime dateReservation;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate purchaseDate;
+    private LocalDate dateStart;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dateEnd;
+
+    private Integer totalDays;
 
     private BigDecimal price;
 
-    private FlyResponse fly;
+    private HotelResponse hotelResponse;
 
 }

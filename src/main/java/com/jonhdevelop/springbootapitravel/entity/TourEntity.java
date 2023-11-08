@@ -29,7 +29,7 @@ public class TourEntity {
             fetch = FetchType.LAZY,
             orphanRemoval = true
     )
-    private Set<ReservacionEntity> reservations;
+    private Set<ReservationEntity> reservations;
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -58,7 +58,7 @@ public class TourEntity {
         this.tickets.forEach(ticket -> ticket.setTourEntity(this));
     }
 
-    public void  addReservation(ReservacionEntity reservation){
+    public void  addReservation(ReservationEntity reservation){
         if(Objects.isNull(this.reservations)) this.reservations = new HashSet<>();
         this.reservations.add(reservation);
     }

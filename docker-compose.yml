@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   db:
-    image: postgres:latest
+    image: postgres:15.4
     container_name: db_travel
     restart: always
     volumes:

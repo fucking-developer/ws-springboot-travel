@@ -51,7 +51,7 @@ public class CustomerEntity {
             fetch = FetchType.LAZY,
             orphanRemoval = true
     )
-    private Set<ReservacionEntity> reservations;
+    private Set<ReservationEntity> reservations;
 
     @OneToMany(
             cascade = CascadeType.ALL,
